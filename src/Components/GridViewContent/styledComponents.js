@@ -29,6 +29,7 @@ font-family:"HKGrotesk";
 font-size:14px;
 margin-left:13px;
 opacity:80%;
+width:100%;
 `
 export const ButtonPostContainer=styled.div `
 display:flex;
@@ -71,4 +72,18 @@ list-style-type:none;
 padding:10px;
 flex-wrap:wrap;
 justify-content:space-evenly;
+`
+export const NoItemsContainer=styled.div `
+display:flex;
+flex-direction:row;
+justify-content:center;
+width:100%;
+height:100%;
+`
+export const NotFoundImage=styled.img `
+height:300px;
+width:1000px
+text-align:center;
+align-self:center;
+margin-left:50px;
 `

@@ -93,8 +93,8 @@ cursor:pointer;
 color:#0b69ff;
 font-family: HKGrotesk;
 font-size: 12px;
-
 `
+
 export const NumberContainer1=styled.div `
 width: 24px;
   height: 24px;

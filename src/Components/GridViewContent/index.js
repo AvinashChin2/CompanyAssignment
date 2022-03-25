@@ -1,11 +1,14 @@
 import {Component} from 'react'
 import DataComponent from '../DataComponent';
 import { AiOutlineSearch } from "react-icons/ai";
-import {ViewContainer,CardListContainer,SearchPostContainer,SearchBoxContainer,SearchInput,ButtonPostContainer,WriteButton,ProfileImage,MainContent,MainHeading} from './styledComponents'
+import {ViewContainer,NotFoundImage,NoItemsContainer,CardListContainer,SearchPostContainer,SearchBoxContainer,SearchInput,ButtonPostContainer,WriteButton,ProfileImage,MainContent,MainHeading} from './styledComponents'
 
 class GridViewContent extends Component{
     state={
-        dataDetails:[]
+        dataDetails:[],
+        searchInput:'',
+        isActive:false,
+        activeOption:"",
     }
 
     componentDidMount(){
@@ -42,14 +45,26 @@ class GridViewContent extends Component{
         }
     }
 
+    onChangeInput=event=>{
+        this.setState({searchInput:event.target.value})
+    }
+
+    onClickApproveButton=(id)=>{
+        const {isActive} = this.state
+        this.setState(prevState=>({isActive:!prevState.isActive}))
+        console.log(isActive)
+    }
+
     render(){
-        const {dataDetails} = this.state
+        const {dataDetails,searchInput,isActive,activeOption} = this.state
+        const searchResults = dataDetails.filter(each=>each.title.toLowerCase().includes(searchInput.toLowerCase()))
+        const listLength= searchResults.length>0
         return(
             <ViewContainer>
                 <SearchPostContainer>
                     <SearchBoxContainer>
                     <AiOutlineSearch size="20px"/>
-                        <SearchInput type="search" placeholder="Search"/>
+                        <SearchInput type="search" placeholder="Search" value={searchInput} onChange={this.onChangeInput}/>
                     </SearchBoxContainer>
                     <ButtonPostContainer>
                         <WriteButton>Write Post</WriteButton>
@@ -59,9 +74,12 @@ class GridViewContent extends Component{
                 <MainContent>
                     <MainHeading>Accept Requests</MainHeading>
                     <CardListContainer>
-                    {dataDetails.map(each=>(
-                        <DataComponent trueDetails={each} key={each.postId}/>
-                    ))}
+                        {listLength ? <>{searchResults.map(each=>(
+                        <DataComponent trueDetails={each} key={each.postId} onClickApproveButton={this.onClickApproveButton} isActive={isActive}/>
+                    ))}</>:<NoItemsContainer>
+                        <NotFoundImage src="https://res.cloudinary.com/avinashchinthapally/image/upload/v1648231157/PngItem_1069282_eotpgj.png"/>
+                        </NoItemsContainer>}
+                    
                     </CardListContainer>
                 </MainContent>
             </ViewContainer>

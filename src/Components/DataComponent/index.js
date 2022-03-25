@@ -2,9 +2,12 @@ import {CardContainer,Title,PostContent,TagsContainer,ProfileApproveContainer,Pr
 import { BiMessageDetail } from "react-icons/bi";
 import TagItem from '../TagItem'
 const DataComponent =props=>{
-    const {trueDetails} = props
-    const {commentsCount,tags,postId,postedTime,userId,userName,profilePic,postContent,reactionsCount,tagId,tagName,title}=trueDetails
-
+    const {trueDetails,onClickApproveButton,isActive} = props
+    const {id,commentsCount,tags,postId,postedTime,userId,userName,profilePic,postContent,reactionsCount,tagId,tagName,title}=trueDetails
+    const onClickApprove=()=>{
+        onClickApproveButton(id)
+    }
+    const approveText = isActive ? "Approved" : "Approve"
     return(
         <CardContainer>
             <Title>{title}</Title>
@@ -26,7 +29,7 @@ const DataComponent =props=>{
                     <ProfileImageLogo src={profilePic}/>
                     <ProfleName>{userName}</ProfleName>
                 </ProfileImageNameContainer>
-                <ApproveButton>Approve</ApproveButton>
+                <ApproveButton type="button" id={postId} onClick={onClickApprove}>{approveText}</ApproveButton>
             </ProfileApproveContainer>
         </CardContainer>
     )
